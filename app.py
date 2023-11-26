@@ -10,11 +10,6 @@ from keras.models import load_model
 app = Flask(__name__)
 
 
-def init():
-    global model, graph
-    graph = tf.compat.v1.get_default_graph()
-
-
 @app.route('/predict', methods=['POST'])
 def analysis():
     if request.is_json:
@@ -32,6 +27,7 @@ def analysis():
         x_test = sequence.pad_sequences(x_test, maxlen=max_review_length)  # Should be same which you used for training data
         vector = np.array([x_test.flatten()])
 
+        graph = tf.compat.v1.get_default_graph()
         tf.compat.v1.disable_eager_execution()
 
         with graph.as_default():
@@ -51,5 +47,4 @@ def analysis():
 
 
 if __name__ == "__main__":
-    init()
     app.run()
