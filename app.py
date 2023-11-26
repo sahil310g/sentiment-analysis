@@ -4,7 +4,7 @@ import re
 import tensorflow as tf
 from numpy import array
 from keras.datasets import imdb
-from keras.preprocessing import sequence
+from keras.utils import pad_sequences
 from keras.models import load_model
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def analysis():
 
         words = text.split()
         x_test = [[word_to_id[word] if (word in word_to_id and word_to_id[word] <= 20000) else 0 for word in words]]
-        x_test = sequence.pad_sequences(x_test, maxlen=max_review_length)  # Should be same which you used for training data
+        x_test = pad_sequences(x_test, maxlen=max_review_length)  # Should be same which you used for training data
         vector = np.array([x_test.flatten()])
 
         tf.compat.v1.disable_eager_execution()
