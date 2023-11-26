@@ -15,7 +15,7 @@ def init():
     graph = tf.compat.v1.get_default_graph()
 
 
-@app.route('/predict', methods=['GET'])
+@app.route('/predict', methods=['POST'])
 def analysis():
     if request.is_json:
         text = request.json.get('text')
@@ -50,6 +50,6 @@ def analysis():
         return jsonify({'error': 'Invalid JSON in request body'}), 400
 
 
-# if __name__ == "__main__":
-#     init()
-#     app.run()
+if __name__ == "__main__":
+    init()
+    app.run()
